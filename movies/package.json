@@ -4,7 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "migrate": "npx migrate-mongoose up",
+        "migrate": "npx migrate-mongoose up --autosync",
         "dev": "nodemon"
     },
     "dependencies": {
