@@ -1,0 +1,54 @@
+version: '3.6'
+
+services:
+    movies-master:
+        build:
+            context: .
+        image: &devimg dev
+
+    movies-app:
+        image: *devimg
+        command: ['yarn', 'dev']
+        ports:
+            - 3002:3002
+        volumes:
+            - ./:/app/
+        networks:
+            - imdb
+        depends_on:
+            - movies-master
+            - movies-db
+            - movies-migrations
+
+    movies-migrations:
+        image: *devimg
+        command: ['yarn', 'migrate']
+        depends_on:
+            - movies-master
+            - movies-db
+        networks:
+            - imdb
+
+    movies-db:
+        image: mongo
+        env_file: ./.mongo.env
+        volumes:
+            - /data/db:/data/db
+        ports:
+            - 27017:27017
+        restart: unless-stopped
+        networks:
+            - imdb
+
+    movies-db-gui:
+        image: mongo-express
+        restart: unless-stopped
+        env_file: ./.mongo-express.env
+        ports:
+            - 8081:8081
+        networks:
+            - imdb
+
+networks:
+    imdb:
+        external: true
