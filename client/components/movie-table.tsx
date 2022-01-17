@@ -133,7 +133,7 @@ const MovieRatingWrapper = styled.div`
 `
 
 function MovieRating(props: Movie) {
-    const rating = props.ratingAvg ?? props.ratingValue / props.ratingCount
+    const rating = props.ratingAvg ?? (props.ratingValue / props.ratingCount).toFixed(1)
     return (
         <MovieRatingWrapper>
             <StarIcon />
