@@ -23,3 +23,4 @@ Build and start client app
 ##
 
 There are postman collections in both Auth and Movies service, with which you can play with.
+.env files are includes for your convenience.
